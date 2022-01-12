@@ -2,7 +2,7 @@
 
 ## Further visualizations
 
-Additional results:
+Additional results with the &lambda;~out~=3 model:
 
 ![Additional results with the $\lambda$~o~u~t=3 model](images/results2.jpg)
 

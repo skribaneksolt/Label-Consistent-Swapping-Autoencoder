@@ -144,34 +144,20 @@ class StyleGAN2ResnetEncoderInSemantic(BaseNetwork):
     def nc(self, idx):
         nc = self.opt.netE_nc_steepness ** (5 + idx)
         nc = nc * self.opt.netE_scale_capacity
-        # nc = min(self.opt.global_code_ch, int(round(nc)))
         return round(nc)
         
-        
-    # def forward(self, x, extract_features=False):
     def forward(self, x, extract_inner_sem=False):
         x = self.FromRGB(x)
         midpoint = self.DownToSpatialCode(x)
         sp1 = self.ToSpatialCode1(midpoint)
         sp = self.ToSpatialCode2(sp1)
         inner_sem = self.ToInnerSemantic(sp1)
-        # sp = self.ToSpatialCode(midpoint)
-
-        # if extract_features:
-        #     padded_midpoint = F.pad(midpoint, (1, 0, 1, 0), mode='reflect')
-        #     feature = self.DownToGlobalCode[0](padded_midpoint)
-        #     assert feature.size(2) == sp.size(2) // 2 and \
-        #         feature.size(3) == sp.size(3) // 2
-        #     feature = F.interpolate(
-        #         feature, size=(7, 7), mode='bilinear', align_corners=False)
 
         x = self.DownToGlobalCode(midpoint)
         x = x.mean(dim=(2, 3))
         gl = self.ToGlobalCode(x)
         sp = util.normalize(sp)
         gl = util.normalize(gl)
-        # if extract_features:
-        #     return sp, gl, feature
         if extract_inner_sem:
             return sp, gl, inner_sem
         else:

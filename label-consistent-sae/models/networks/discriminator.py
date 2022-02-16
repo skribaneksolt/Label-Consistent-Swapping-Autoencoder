@@ -10,7 +10,7 @@ class StyleGAN2Discriminator(BaseNetwork):
 
     def __init__(self, opt):
         super().__init__(opt)
-        double_final_linear = False # SOLT modified this!!
+        double_final_linear = False  # SOLT modified this!!
         if opt.preprocess == 'none':
             double_final_linear = True
         self.stylegan2_D = OriginalStyleGAN2Discriminator(

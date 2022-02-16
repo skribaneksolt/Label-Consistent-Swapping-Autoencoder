@@ -1,7 +1,6 @@
 import torch
 from torch import nn
 from torch.nn import functional as F
-
 from .utils import _SimpleSegmentationModel
 
 
@@ -160,7 +159,6 @@ class ASPP(nn.Module):
             res.append(conv(x))
         res = torch.cat(res, dim=1)
         return self.project(res)
-
 
 
 def convert_to_separable_conv(module):

@@ -21,7 +21,6 @@ class BasePatchDiscriminator(BaseNetwork):
 
     def __init__(self, opt):
         super().__init__(opt)
-        #self.visdom = util.Visualizer(opt)
 
     def needs_regularization(self):
         return False
@@ -38,8 +37,6 @@ class BasePatchDiscriminator(BaseNetwork):
         before = patches
         transformer = util.RandomSpatialTransformer(self.opt, B * ntiles)
         patches = transformer.forward_transform(patches, (self.opt.patch_size, self.opt.patch_size))
-        #self.visdom.display_current_results({'before': before,
-        #                                     'after': patches}, 0, save_result=False)
         return patches.view(B, ntiles, C, H, W)
 
     def sample_patches_old(self, img, indices):
@@ -77,8 +74,6 @@ class BasePatchDiscriminator(BaseNetwork):
 
         if fake is not None:
             fake_patches = self.sample_patches(fake, patch_ids)
-            #self.visualizer.display_current_results({'real_A': real_patches[0],
-            #                                         'real_B': torch.roll(fake_patches, 1, 1)[0]}, 0, False, max_num_images=16)
             fake_feat = self.extract_features(fake_patches)
             pred_fake = self.discriminate_features(
                 real_feat,

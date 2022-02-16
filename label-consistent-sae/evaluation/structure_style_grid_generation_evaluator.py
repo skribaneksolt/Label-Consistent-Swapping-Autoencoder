@@ -84,6 +84,3 @@ class StructureStyleGridGenerationEvaluator(BaseEvaluator):
 
             self.webpage.save()
         return {}
-                
-                
-        
